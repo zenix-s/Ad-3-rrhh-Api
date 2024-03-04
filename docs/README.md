@@ -11,9 +11,9 @@ Comentario - Que es el comentario que se va a hacer sobre el empleado, puede con
 ![Base de datos](./img/bbdd.png)
 
 ```sql
-CREATE DATABASE IF NOT EXISTS `rrhh`;
+CREATE DATABASE IF NOT EXISTS `ad_3`;
 
-USE `rrhh`;
+USE `ad_3`;
 
 CREATE TABLE IF NOT EXISTS `user` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -29,12 +29,14 @@ CREATE TABLE IF NOT EXISTS `member` (
     `lastName` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
     `phoneNumber` VARCHAR(255) NOT NULL,
-    `direction` VARCHAR(255) NOT NULL,
+    `address` VARCHAR(255) NOT NULL,
     `salary` DECIMAL(10,2) NOT NULL,
     `birthDate` DATE NOT NULL,
     `hireDate` DATE NOT NULL,
-    `departureDate` DATE,
+		`role` VARCHAR(255) NOT NULL,
+	  `departureDate` DATE,
     `active` TINYINT(1) NOT NULL,
+
     PRIMARY KEY (`id`)
 );
 

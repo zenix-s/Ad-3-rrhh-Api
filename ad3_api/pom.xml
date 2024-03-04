@@ -8,8 +8,8 @@
 		<version>3.2.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>es.rrhh.back</groupId>
-	<artifactId>back</artifactId>
+	<groupId>es.ad3</groupId>
+	<artifactId>ad3_api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>back</name>
 	<description>Backend para ej ad-3 despliegue aplicaciones web</description>

@@ -335,8 +335,8 @@
     },
     {
       "type": "text",
-      "version": 216,
-      "versionNonce": 1238154201,
+      "version": 217,
+      "versionNonce": 409225918,
       "isDeleted": false,
       "id": "94O6YTI07rVJMXUSkijOh",
       "fillStyle": "solid",
@@ -356,7 +356,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1709391053829,
+      "updated": 1709570411357,
       "link": null,
       "locked": false,
       "fontSize": 36,
@@ -371,8 +371,8 @@
     },
     {
       "type": "text",
-      "version": 250,
-      "versionNonce": 324028983,
+      "version": 251,
+      "versionNonce": 1189693474,
       "isDeleted": false,
       "id": "ryREB3o6Uo-GXcvYgsTzR",
       "fillStyle": "solid",
@@ -401,7 +401,7 @@
           "type": "arrow"
         }
       ],
-      "updated": 1709391053831,
+      "updated": 1709570411358,
       "link": null,
       "locked": false,
       "fontSize": 36,
@@ -416,8 +416,8 @@
     },
     {
       "type": "text",
-      "version": 549,
-      "versionNonce": 1079630009,
+      "version": 567,
+      "versionNonce": 1064417954,
       "isDeleted": false,
       "id": "44Aj5a8P74GxuiNrvMLSs",
       "fillStyle": "solid",
@@ -431,7 +431,7 @@
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
       "width": 298.296142578125,
-      "height": 495,
+      "height": 540,
       "seed": 415553519,
       "groupIds": [],
       "frameId": null,
@@ -442,18 +442,18 @@
           "type": "arrow"
         }
       ],
-      "updated": 1709391053833,
+      "updated": 1709570795469,
       "link": null,
       "locked": false,
       "fontSize": 36,
       "fontFamily": 1,
-      "text": "- id \n- name\n- lastName\n- email\n- phoneNumber\n- direction\n- salary\n- hireDate\n- birthDate\n- departureDate\n- active",
+      "text": "- id \n- name\n- lastName\n- email\n- phoneNumber\n- address\n- salary\n- hireDate\n- birthDate\n- departureDate\n- active\n- role",
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": "- id \n- name\n- lastName\n- email\n- phoneNumber\n- direction\n- salary\n- hireDate\n- birthDate\n- departureDate\n- active",
+      "originalText": "- id \n- name\n- lastName\n- email\n- phoneNumber\n- address\n- salary\n- hireDate\n- birthDate\n- departureDate\n- active\n- role",
       "lineHeight": 1.25,
-      "baseline": 482
+      "baseline": 527
     },
     {
       "type": "arrow",
@@ -505,8 +505,8 @@
     },
     {
       "type": "arrow",
-      "version": 39,
-      "versionNonce": 318745464,
+      "version": 73,
+      "versionNonce": 567867938,
       "isDeleted": false,
       "id": "rXEu6xOGWIi0f0oxPuU4g",
       "fillStyle": "solid",
@@ -515,12 +515,12 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 1004.8440856933594,
-      "y": 363.5,
+      "x": 1004.8440856933593,
+      "y": 364.69047715496225,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
-      "width": 169,
-      "height": 50,
+      "width": 168.99999999999977,
+      "height": 49.290693519132844,
       "seed": 83511816,
       "groupIds": [],
       "frameId": null,
@@ -528,7 +528,7 @@
         "type": 2
       },
       "boundElements": [],
-      "updated": 1709212919942,
+      "updated": 1709570795472,
       "link": null,
       "locked": false,
       "startBinding": {
@@ -550,8 +550,8 @@
           0
         ],
         [
-          -169,
-          50
+          -168.99999999999977,
+          49.290693519132844
         ]
       ]
     }

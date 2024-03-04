@@ -1,4 +1,4 @@
-package es.rrhh.back;
+package es.ad3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
