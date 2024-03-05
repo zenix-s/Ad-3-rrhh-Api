@@ -28,10 +28,10 @@ public class Comment {
 	private Date date;
 
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "idUser")
 	private User user;	
 
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "idMember")
 	private Member member;
 }
