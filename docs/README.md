@@ -18,6 +18,7 @@ USE `ad_3`;
 CREATE TABLE IF NOT EXISTS `user` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
+		`lastName` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`)
@@ -45,84 +46,349 @@ CREATE TABLE IF NOT EXISTS `comment` (
     `idMember` INT(11) NOT NULL,
     `idUser` INT(11) NOT NULL,
     `comment` TEXT NOT NULL,
+		`type` VARCHAR(255) NOT NULL,
     `date` DATE NOT NULL,
+		`endDate` DATE,
     PRIMARY KEY (`id`)
 );
 
 ```
 
-Las urls que se van a utilizar son las siguientes:
+### Endpoints
 
-GET /api/usuarios/:id 
-- Obtener un usuario en concreto
-- :id - El id del usuario
-- Devuelve un objeto con los datos del usuario
+#### Usuarios
 
-POST /api/usuarios
-- Crear un usuario
-- Se le pasa un objeto con los datos del usuario
-- Devuelve un objeto con los datos del usuario
+- **GET /api/usuarios/:id**
+  - Obtener un usuario específico
+  - **Parámetros:**
+    - :id (integer) - Identificador del usuario
+  - **Respuesta:**
+    - Devuelve un objeto con los datos del usuario.
+    ```json
+    {
+      "id": 1,
+      "name": "Juan",
+      "lastName": "Perez",
+      "email": "juaper@email.com"
+    }
+    ```
 
-PUT /api/usuarios/:id 
-- Modificar un usuario
-- :id - El id del usuario
-- Se le pasa un objeto con los datos del usuario
-- Devuelve un objeto con los datos nuevos del usuario
+- **POST /api/usuarios**
+  - Crear un nuevo usuario
+  - **Datos de entrada:**
+    - Objeto con los datos del usuario
+    ```json
+    {
+      "name": "Juan",
+      "lastName": "Perez",
+      "email": "juaper@email.com",
+      "password": "1234"
+    }
+    ```
+  - **Respuesta:**
+    - Devuelve un objeto con los datos del usuario recién creado.
+    ```json
+    {
+      "id": 1,
+      "name": "Juan",
+      "lastName": "Perez",
+      "email": "juaper@email.com"
+    }
+    ```
 
-DELETE /api/usuarios/:id 
-- Para borrar un usuario
-- :id - El id del usuario
-- Un booleano si se ha borrado o no
+- **PUT /api/usuarios/:id**
+  - Modificar un usuario existente
+  - **Parámetros:**
+    - :id (integer) - Identificador del usuario
+  - **Datos de entrada:**
+    - Objeto con los nuevos datos del usuario
+    ```json
+    {
+      "name": "Juan",
+      "lastName": "Perez",
+      "email": "juan_updated@email.com",
+      "password": "5678"
+    }
+    ```
+  - **Respuesta:**
+    - Devuelve un objeto con los datos actualizados del usuario.
+    ```json
+    {
+      "id": 1,
+      "name": "Juan",
+      "lastName": "Perez",
+      "email": "juan_updated@email.com"
+    }
+    ```
 
+- **DELETE /api/usuarios/:id**
+  - Eliminar un usuario
+  - **Parámetros:**
+    - :id (integer) - Identificador del usuario
+  - **Respuesta:**
+    - Devuelve un booleano indicando si se ha borrado o no.
+    ```json
+    {
+      "deleted": true
+    }
+    ```
 
-GET /api/empleados 
-- Para obtener todos los empleados
-- Devuelve un array con todos los empleados
+#### Miembros
 
-GET /api/empleados/:id 
-- Para obtener un empleado en concreto
-- :id - El id del empleado
-- Devuelve un objeto con los datos del empleado
+- **GET /api/miembros**
+  - Obtener todos los miembros
+  - **Respuesta:**
+    - Devuelve un array con todos los miembros.
+    ```json
+    [
+      {
+        "id": 1,
+        "name": "Miembro1",
+        "lastName": "Apellido1",
+        "email": "miembro1@email.com",
+        "phoneNumber": "123456789",
+        "address": "Dirección1",
+        "salary": 50000.00,
+        "birthDate": "1990-01-01",
+        "hireDate": "2020-01-01",
+        "role": "Puesto1",
+        "departureDate": null,
+        "active": 1
+      },
+      // Otros miembros...
+    ]
+    ```
 
-POST /api/empleados 
-- Para crear un empleado
-- Se le pasa un objeto con los datos del empleado
-- Devuelve un objeto con los datos del empleado
+- **GET /api/miembros/:id**
+  - Obtener un miembro específico
+  - **Parámetros:**
+    - :id (integer) - Identificador del miembro
+  - **Respuesta:**
+    - Devuelve un objeto con los datos del miembro.
+    ```json
+    {
+      "id": 1,
+      "name": "Miembro1",
+      "lastName": "Apellido1",
+      "email": "miembro1@email.com",
+      "phoneNumber": "123456789",
+      "address": "Dirección1",
+      "salary": 50000.00,
+      "birthDate": "1990-01-01",
+      "hireDate": "2020-01-01",
+      "role": "Puesto1",
+      "departureDate": null,
+      "active": 1
+    }
+    ```
 
-PUT /api/empleados/:id 
-- Para modificar un empleado
-- :id - El id del empleado
-- Se le pasa un objeto con los datos del empleado
-- Devuelve un objeto con los datos nuevos del empleado
+- **POST /api/miembros**
+  - Crear un nuevo miembro
+  - **Datos de entrada:**
+    - Objeto con los datos del miembro
+    ```json
+    {
+      "name": "NuevoMiembro",
+      "lastName": "NuevoApellido",
+      "email": "nuevomiembro@email.com",
+      "phoneNumber": "987654321",
+      "address": "NuevaDirección",
+      "salary": 60000.00,
+      "birthDate": "1995-02-15",
+      "hireDate": "2022-03-01",
+      "role": "NuevoPuesto",
+      "departureDate": null,
+      "active": 1
+    }
+    ```
+  - **Respuesta:**
+    - Devuelve un objeto con los datos del miembro recién creado.
+    ```json
+    {
+      "id": 2,
+      "name": "NuevoMiembro",
+      "lastName": "NuevoApellido",
+      "email": "nuevomiembro@email.com",
+      "phoneNumber": "987654321",
+      "address": "NuevaDirección",
+      "salary": 60000.00,
+      "birthDate": "1995-02-15",
+      "hireDate": "2022-03-01",
+      "role": "NuevoPuesto",
+      "departureDate": null,
+      "active": 1
+    }
+    ```
 
-DELETE /api/empleados/:id 
-- Para borrar un empleado
-- :id - El id del empleado
-- Un booleano si se ha borrado o no
+- **PUT /api/miembros/:id**
+  - Modificar un miembro existente
+  - Esto también hara una llamada a la api de comentarios para añadir comentarios de la modificaciones realizadas
+  - **Parámetros:**
+    - :id (integer) - Identificador del miembro
+  - **Datos de entrada:**
+    - Objeto con los nuevos datos del miembro
+    ```json
+    {
+      "name": "MiembroModificado",
+      "lastName": "ApellidoModificado",
+      "email": "modificado@email.com",
+      "phoneNumber": "111111111",
+      "address": "NuevaDirecciónModificada",
+      "salary": 70000.00,
+      "birthDate": "1993-05-20",
+      "role": "PuestoModificado"
+    }
+    ```
+  - **Respuesta:**
+    - Devuelve un objeto con los datos actualizados del miembro.
+    ```json
+    {
+      "id": 1,
+      "name": "MiembroModificado",
+      "lastName": "ApellidoModificado",
+      "email": "modificado@email.com",
+      "phoneNumber": "111111111",
+      "address": "NuevaDirecciónModificada",
+      "salary": 70000.00,
+      "birthDate": "1993-05-20",
+      "role": "PuestoModificado",
+      "departureDate": null,
+      "active": 1
+    }
+    ```
 
-GET /api/comentarios/:idEmpleado 
-- Para obtener todos los comentarios de un empleado
-- :idEmpleado - El id del empleado
-- Devuelve un array con todos los comentarios de un empleado
+- **DELETE /api/miembros/:id**
+  - Eliminar un miembro
+  - **Parámetros:**
+    - :id (integer) - Identificador del miembro
+  - **Respuesta:**
+    - Devuelve un booleano indicando si se ha borrado o no.
+    ```json
+    {
+      "deleted": true
+    }
+    ```
 
-GET /api/comentarios/:idEmpleado/:id 
-- Para obtener un comentario en concreto de un empleado
-- :idEmpleado - El id del empleado
-- :id - El id del comentario
-- Devuelve un objeto con los datos del comentario
-POST /api/comentarios 
-- Para crear un comentario
-- Se le pasa un objeto con los datos del comentario
-- Devuelve un objeto con los datos del comentario
+#### Comentarios
 
-PUT /api/comentarios/:id 
-- Para modificar un comentario
-- :id - El id del comentario
-- Se le pasa un objeto con los datos del comentario
-- Devuelve un objeto con los datos nuevos del comentario
+- **GET /api/comentarios/:idMiembro**
+  - Obtener todos los comentarios de un miembro
+  - **Parámetros:**
+    - :idMiembro (integer) - Identificador del miembro
+  - **Respuesta:**
+    - Devuelve un array con todos los comentarios de un miembro.
+    ```json
+    [
+      {
+        "id": 1,
+        "idMember": 1,
+        "idUser": 1,
+        "type": "Alta",
+        "comment": "Comentario sobre el miembro",
+        "date": "2022-03-10",
+        "endDate": null
+      },
+      {
+        "id": 2,
+        "idMember": 1,
+        "idUser": 1,
+        "type": "Aumento de salario",
+        "comment": "Comentario sobre el miembro",
+        "date": "2022-03-10",
+        "endDate": null
+      },
+      {
+        "id": 3,
+        "idMember": 1,
+        "idUser": 1,
+        "type": "Baja",
+        "comment": "Comentario sobre el miembro",
+        "date": "2022-03-10",
+        "endDate": "2022-03-11"
+      }
+    ]
+    ```
 
-DELETE /api/comentarios/:id 
-- Para borrar un comentario
-- :id - El id del comentario
-- Devuelve un booleano si se ha borrado o no
+- **GET /api/comentarios/:idMiembro/:id**
+  - Obtener un comentario específico de un miembro
+  - **Parámetros:**
+    - :idMiembro (integer) - Identificador del miembro
+    - :id (integer) - Identificador del comentario
+  - **Respuesta:**
+    - Devuelve un objeto con los datos del comentario.
+    ```json
+    {
+      "id": 1,
+      "idMember": 1,
+      "idUser": 1,
+      "type": "Alta",
+      "comment": "Comentario sobre el miembro",
+      "date": "2022-03-10",
+      "endDate": null
+    }
+    ```
 
+- **POST /api/comentarios**
+  - Crear un nuevo comentario
+  - **Datos de entrada:**
+    - Objeto con los datos del comentario
+    ```json
+    {
+      "idMember": 1,
+      "idUser": 1,
+      "type": "Comentario",
+      "comment": "Nuevo comentario sobre el miembro",
+      "date": "2022-03-11"
+    }
+    ```
+  - **Respuesta:**
+    - Devuelve un objeto con los datos del comentario recién creado.
+    ```json
+    {
+      "id": 4,
+      "idMember": 1,
+      "idUser": 1,
+      "type": "Comentario",
+      "comment": "Nuevo comentario sobre el miembro",
+      "date": "2022-03-11"
+    }
+    ```
+
+- **PUT /api/comentarios/:id**
+  - Modificar un comentario existente
+  - **Parámetros:**
+    - :id (integer) - Identificador del comentario
+  - **Datos de entrada:**
+    - Objeto con los nuevos datos del comentario. Se puede modificar el comentario, y la fecha de inicio y fin.
+    ```json
+    {
+      "comment": "Comentario modificado sobre el miembro",
+      "date": "2022-03-12",
+      "endDate": "2022-03-13"
+    }
+    ```
+  - **Respuesta:**
+    - Devuelve un objeto con los datos actualizados del comentario.
+    ```json
+    {
+      "id": 4,
+      "idMember": 1,
+      "idUser": 1,
+      "type": "Comentario",
+      "comment": "Comentario modificado sobre el miembro",
+      "date": "2022-03-12",
+      "endDate": "2022-03-13"
+    }
+    ```
+
+- **DELETE /api/comentarios/:id**
+  - Eliminar un comentario
+  - **Parámetros:**
+    - :id (integer) - Identificador del comentario
+  - **Respuesta:**
+    - Devuelve un booleano indicando si se ha borrado o no.
+    ```json
+    {
+      "deleted": true
+    }
+    ```
