@@ -2,9 +2,9 @@
 
 Para este proyecto se va a hacer una herramienta para un equipo de recursos humanos que les permita llevar un control de los empleados, sus datos personales, sus salarios, sus vacaciones, sus bajas, sus permisos, etc. a traves de comentarios, son 3 tablas las que se van a utilizar,
 
-Usuario - Que es la persona de recursos humanos que va a utilizar la herramienta
-Empleado - Que es el empleado de la empresa
-Comentario - Que es el comentario que se va a hacer sobre el empleado, puede consistir en una baja, un permiso, una vacación, un comentario sobre el salario, etc.
+user - Que es la persona de recursos humanos que va a utilizar la herramienta
+member - Que es el empleado de la empresa
+comment - Que es el comentario que se va a hacer sobre el empleado, puede consistir en una baja, un permiso, una vacación, un comentario sobre el salario, etc.
 
 ## Base de datos
 
@@ -93,31 +93,6 @@ CREATE TABLE IF NOT EXISTS `comment` (
       "name": "Juan",
       "lastName": "Perez",
       "email": "juaper@email.com"
-    }
-    ```
-
-- **PUT /api/usuarios/:id**
-  - Modificar un usuario existente
-  - **Parámetros:**
-    - :id (integer) - Identificador del usuario
-  - **Datos de entrada:**
-    - Objeto con los nuevos datos del usuario
-    ```json
-    {
-      "name": "Juan",
-      "lastName": "Perez",
-      "email": "juan_updated@email.com",
-      "password": "5678"
-    }
-    ```
-  - **Respuesta:**
-    - Devuelve un objeto con los datos actualizados del usuario.
-    ```json
-    {
-      "id": 1,
-      "name": "Juan",
-      "lastName": "Perez",
-      "email": "juan_updated@email.com"
     }
     ```
 
@@ -351,33 +326,6 @@ CREATE TABLE IF NOT EXISTS `comment` (
       "type": "Comentario",
       "comment": "Nuevo comentario sobre el miembro",
       "date": "2022-03-11"
-    }
-    ```
-
-- **PUT /api/comentarios/:id**
-  - Modificar un comentario existente
-  - **Parámetros:**
-    - :id (integer) - Identificador del comentario
-  - **Datos de entrada:**
-    - Objeto con los nuevos datos del comentario. Se puede modificar el comentario, y la fecha de inicio y fin.
-    ```json
-    {
-      "comment": "Comentario modificado sobre el miembro",
-      "date": "2022-03-12",
-      "endDate": "2022-03-13"
-    }
-    ```
-  - **Respuesta:**
-    - Devuelve un objeto con los datos actualizados del comentario.
-    ```json
-    {
-      "id": 4,
-      "idMember": 1,
-      "idUser": 1,
-      "type": "Comentario",
-      "comment": "Comentario modificado sobre el miembro",
-      "date": "2022-03-12",
-      "endDate": "2022-03-13"
     }
     ```
 
