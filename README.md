@@ -56,9 +56,19 @@ CREATE TABLE IF NOT EXISTS `comment` (
 
 ```
 
+### Interfaz
+
+Listar los comentarios de un miembro
+![Interfaz](./img/app.png)
+
+Pulsar en info nos permite Visualizar y editar los datos del usuario, esto genera un comentario indicando los datos realizados
+![Datos](./img/DATOS.png)
+
 ### Endpoints
 
 #### Usuarios
+
+Los usuarios son solo perfiles que permiten usar la aplicación y solo deben ser generadas por un administrador
 
 - **GET /api/usuarios/:id**
   - Obtener un usuario específico
@@ -111,6 +121,8 @@ CREATE TABLE IF NOT EXISTS `comment` (
     ```
 
 #### Miembros
+
+Los miembros en el caso dado son empleados de la empresa y los datos son manejados por los usuarios en este caso los empleados de recursos humanos.
 
 - **GET /api/miembros**
   - Obtener todos los miembros
