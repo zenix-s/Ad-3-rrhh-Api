@@ -1,356 +1,79 @@
-# AD-3 - API REST
+# Kronos
 
-Para este proyecto se va a hacer una herramienta para un equipo de recursos humanos que les permita llevar un control de los empleados, sus datos personales, sus salarios, sus vacaciones, sus bajas, sus permisos, etc. a traves de comentarios, son 3 tablas las que se van a utilizar,
+Kronos es una aplicación para la gestión interna de tickets. Esta pensada para ser utilizada por empresas que necesiten gestionar tickets a departamentos internos como soporte técnico, recursos humanos, etc.
 
-user - Que es la persona de recursos humanos que va a utilizar la herramienta
-member - Que es el empleado de la empresa
-comment - Que es el comentario que se va a hacer sobre el empleado, puede consistir en una baja, un permiso, una vacación, un comentario sobre el salario, etc.
+Kronos esta pensado para ser una aplicación open source y self-hosted, es decir, que cada empresa pueda instalarla en sus propios servidores y adaptarla a sus necesidades.
 
+## ¿Por qué?
 
+La idea de Kronos surge de la necesidad de tener una aplicación de gestión de tickets que se adapte a las necesidades de cada empresa.
 
-## Base de datos
+## Tecnologías
 
-![Base de datos](./img/bbdd.png)
+### Frontend
+- Angular
+- TailwindCSS
 
-```sql
-CREATE DATABASE IF NOT EXISTS `ad_3`;
+### Backend
+- NodeJS
+- MongoDB
 
-USE `ad_3`;
+## Asignaturas
 
-CREATE TABLE IF NOT EXISTS `user` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL,
-		`lastName` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`id`)
-);
+### Desarrollo de aplicaciones web en entorno cliente
+- Se utilizará Angular para el desarrollo del frontend
 
-CREATE TABLE IF NOT EXISTS `member` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL,
-    `lastName` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
-    `phoneNumber` VARCHAR(255) NOT NULL,
-    `address` VARCHAR(255) NOT NULL,
-    `salary` DECIMAL(10,2) NOT NULL,
-    `birthDate` DATE NOT NULL,
-    `hireDate` DATE NOT NULL,
-		`role` VARCHAR(255) NOT NULL,
-	  `departureDate` DATE,
-    `active` TINYINT(1) NOT NULL,
+### Desarrollo de aplicaciones web en entorno servidor
+- Se aplicarán conocimientos en la creación de APIs REST
+- Se utilizará conocimiento en la creación de bases de datos
 
-    PRIMARY KEY (`id`)
-);
+### Diseño de interfaces
+- Creación de los diseños de la aplicación
+- Se aplicarán conocimientos en el diseño de interfaces con css
 
-CREATE TABLE IF NOT EXISTS `comment` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `idMember` INT(11) NOT NULL,
-    `idUser` INT(11) NOT NULL,
-    `comment` TEXT NOT NULL,
-		`type` VARCHAR(255) NOT NULL,
-    `date` DATE NOT NULL,
-		`endDate` DATE,
-    PRIMARY KEY (`id`)
-);
+### Despliegue de aplicaciones web
+- Se aplicarán conocimientos a traves del depligue de la aplicación en un servidor Debian.
 
-```
+## Funcionamiento
 
-### Interfaz
+Un usuario puede crear un ticket.
+Un ticket puede ser asignado a un departamento o a un usuario.
+Un ticket puede tener una prioridad.
+El ticket ha es aceptado por el departamento o usuario asignado.
+El ticket puede tener un estado (abierto, en curso, resuelto). <-- Esto puede ser un campo personalizable.
+El ticket puede tener comentarios.
+  - Los comentarios pueden ser del usuario.
+  - Los comentarios pueden ser del departamento o usuario asignado.
+    - Los comentarios del departamento o usuario asignado pueden ser privados, y solo visibles para el departamento o usuario asignado.
 
-Listar los comentarios de un miembro
-![Interfaz](./img/app.png)
+## Apartados a implementar
 
-Pulsar en info nos permite Visualizar y editar los datos del usuario, esto genera un comentario indicando los datos realizados
-![Datos](./img/DATOS.png)
+- Fase 1: Creación y gestión de tickets
 
-### Endpoints
+  - Creación de tickets:
+      - Formulario para la creación de tickets con campos personalizables.
+      - Categorización y prioridad de tickets.
+      - Adjuntos de archivos.
+  - Gestión de tickets:
+      - Visualización de tickets con información completa.
+      - Asignación de tickets a usuarios o departamentos.
+      - Seguimiento del estado de los tickets (abierto, en curso, resuelto).
+      - Historial de comentarios y actualizaciones.
 
-#### Usuarios
+- Fase 2: Notificaciones y comunicación
 
-Los usuarios son solo perfiles que permiten usar la aplicación y solo deben ser generadas por un administrador
+  - Notificaciones:
+    - Notificar por correo electrónico o web a los usuarios sobre cambios en los tickets.
+    - Notificaciones automáticas al asignar tickets o realizar cambios.
+  - Comunicación:
+    - Sistema de mensajería interna para la comunicación entre usuarios sobre los tickets.
+    - Adjuntar archivos a los mensajes.
 
-- **GET /api/usuarios/:id**
-  - Obtener un usuario específico
-  - **Parámetros:**
-    - :id (integer) - Identificador del usuario
-  - **Respuesta:**
-    - Devuelve un objeto con los datos del usuario.
-    ```json
-    {
-      "id": 1,
-      "name": "Juan",
-      "lastName": "Perez",
-      "email": "juaper@email.com"
-    }
-    ```
+- Fase 3: Administración y configuración
 
-- **POST /api/usuarios**
-  - Crear un nuevo usuario
-  - **Datos de entrada:**
-    - Objeto con los datos del usuario
-    ```json
-    {
-      "name": "Juan",
-      "lastName": "Perez",
-      "email": "juaper@email.com",
-      "password": "1234"
-    }
-    ```
-  - **Respuesta:**
-    - Devuelve un objeto con los datos del usuario recién creado.
-    ```json
-    {
-      "id": 1,
-      "name": "Juan",
-      "lastName": "Perez",
-      "email": "juaper@email.com"
-    }
-    ```
-
-- **DELETE /api/usuarios/:id**
-  - Eliminar un usuario
-  - **Parámetros:**
-    - :id (integer) - Identificador del usuario
-  - **Respuesta:**
-    - Devuelve un booleano indicando si se ha borrado o no.
-    ```json
-    {
-      "deleted": true
-    }
-    ```
-
-#### Miembros
-
-Los miembros en el caso dado son empleados de la empresa y los datos son manejados por los usuarios en este caso los empleados de recursos humanos.
-
-- **GET /api/miembros**
-  - Obtener todos los miembros
-  - **Respuesta:**
-    - Devuelve un array con todos los miembros.
-    ```json
-    [
-      {
-        "id": 1,
-        "name": "Miembro1",
-        "lastName": "Apellido1",
-        "email": "miembro1@email.com",
-        "phoneNumber": "123456789",
-        "address": "Dirección1",
-        "salary": 50000.00,
-        "birthDate": "1990-01-01",
-        "hireDate": "2020-01-01",
-        "role": "Puesto1",
-        "departureDate": null,
-        "active": 1
-      },
-      // Otros miembros...
-    ]
-    ```
-
-- **GET /api/miembros/:id**
-  - Obtener un miembro específico
-  - **Parámetros:**
-    - :id (integer) - Identificador del miembro
-  - **Respuesta:**
-    - Devuelve un objeto con los datos del miembro.
-    ```json
-    {
-      "id": 1,
-      "name": "Miembro1",
-      "lastName": "Apellido1",
-      "email": "miembro1@email.com",
-      "phoneNumber": "123456789",
-      "address": "Dirección1",
-      "salary": 50000.00,
-      "birthDate": "1990-01-01",
-      "hireDate": "2020-01-01",
-      "role": "Puesto1",
-      "departureDate": null,
-      "active": 1
-    }
-    ```
-
-- **POST /api/miembros**
-  - Crear un nuevo miembro
-  - **Datos de entrada:**
-    - Objeto con los datos del miembro
-    ```json
-    {
-      "name": "NuevoMiembro",
-      "lastName": "NuevoApellido",
-      "email": "nuevomiembro@email.com",
-      "phoneNumber": "987654321",
-      "address": "NuevaDirección",
-      "salary": 60000.00,
-      "birthDate": "1995-02-15",
-      "hireDate": "2022-03-01",
-      "role": "NuevoPuesto",
-      "departureDate": null,
-      "active": 1
-    }
-    ```
-  - **Respuesta:**
-    - Devuelve un objeto con los datos del miembro recién creado.
-    ```json
-    {
-      "id": 2,
-      "name": "NuevoMiembro",
-      "lastName": "NuevoApellido",
-      "email": "nuevomiembro@email.com",
-      "phoneNumber": "987654321",
-      "address": "NuevaDirección",
-      "salary": 60000.00,
-      "birthDate": "1995-02-15",
-      "hireDate": "2022-03-01",
-      "role": "NuevoPuesto",
-      "departureDate": null,
-      "active": 1
-    }
-    ```
-
-- **PUT /api/miembros/:id**
-  - Modificar un miembro existente
-  - Esto también hara una llamada a la api de comentarios para añadir comentarios de la modificaciones realizadas
-  - **Parámetros:**
-    - :id (integer) - Identificador del miembro
-  - **Datos de entrada:**
-    - Objeto con los nuevos datos del miembro
-    ```json
-    {
-      "name": "MiembroModificado",
-      "lastName": "ApellidoModificado",
-      "email": "modificado@email.com",
-      "phoneNumber": "111111111",
-      "address": "NuevaDirecciónModificada",
-      "salary": 70000.00,
-      "birthDate": "1993-05-20",
-      "role": "PuestoModificado"
-    }
-    ```
-  - **Respuesta:**
-    - Devuelve un objeto con los datos actualizados del miembro.
-    ```json
-    {
-      "id": 1,
-      "name": "MiembroModificado",
-      "lastName": "ApellidoModificado",
-      "email": "modificado@email.com",
-      "phoneNumber": "111111111",
-      "address": "NuevaDirecciónModificada",
-      "salary": 70000.00,
-      "birthDate": "1993-05-20",
-      "role": "PuestoModificado",
-      "departureDate": null,
-      "active": 1
-    }
-    ```
-
-- **DELETE /api/miembros/:id**
-  - Eliminar un miembro
-  - **Parámetros:**
-    - :id (integer) - Identificador del miembro
-  - **Respuesta:**
-    - Devuelve un booleano indicando si se ha borrado o no.
-    ```json
-    {
-      "deleted": true
-    }
-    ```
-
-#### Comentarios
-
-- **GET /api/comentarios/:idMiembro**
-  - Obtener todos los comentarios de un miembro
-  - **Parámetros:**
-    - :idMiembro (integer) - Identificador del miembro
-  - **Respuesta:**
-    - Devuelve un array con todos los comentarios de un miembro.
-    ```json
-    [
-      {
-        "id": 1,
-        "idMember": 1,
-        "idUser": 1,
-        "type": "Alta",
-        "comment": "Comentario sobre el miembro",
-        "date": "2022-03-10",
-        "endDate": null
-      },
-      {
-        "id": 2,
-        "idMember": 1,
-        "idUser": 1,
-        "type": "Aumento de salario",
-        "comment": "Comentario sobre el miembro",
-        "date": "2022-03-10",
-        "endDate": null
-      },
-      {
-        "id": 3,
-        "idMember": 1,
-        "idUser": 1,
-        "type": "Baja",
-        "comment": "Comentario sobre el miembro",
-        "date": "2022-03-10",
-        "endDate": "2022-03-11"
-      }
-    ]
-    ```
-
-- **GET /api/comentarios/:idMiembro/:id**
-  - Obtener un comentario específico de un miembro
-  - **Parámetros:**
-    - :idMiembro (integer) - Identificador del miembro
-    - :id (integer) - Identificador del comentario
-  - **Respuesta:**
-    - Devuelve un objeto con los datos del comentario.
-    ```json
-    {
-      "id": 1,
-      "idMember": 1,
-      "idUser": 1,
-      "type": "Alta",
-      "comment": "Comentario sobre el miembro",
-      "date": "2022-03-10",
-      "endDate": null
-    }
-    ```
-
-- **POST /api/comentarios**
-  - Crear un nuevo comentario
-  - **Datos de entrada:**
-    - Objeto con los datos del comentario
-    ```json
-    {
-      "idMember": 1,
-      "idUser": 1,
-      "type": "Comentario",
-      "comment": "Nuevo comentario sobre el miembro",
-      "date": "2022-03-11"
-    }
-    ```
-  - **Respuesta:**
-    - Devuelve un objeto con los datos del comentario recién creado.
-    ```json
-    {
-      "id": 4,
-      "idMember": 1,
-      "idUser": 1,
-      "type": "Comentario",
-      "comment": "Nuevo comentario sobre el miembro",
-      "date": "2022-03-11"
-    }
-    ```
-
-- **DELETE /api/comentarios/:id**
-  - Eliminar un comentario
-  - **Parámetros:**
-    - :id (integer) - Identificador del comentario
-  - **Respuesta:**
-    - Devuelve un booleano indicando si se ha borrado o no.
-    ```json
-    {
-      "deleted": true
-    }
-    ```
+  -  Administración de usuarios:
+    - Creación, edición y eliminación de usuarios.
+      -  Permisos y roles para diferentes usuarios.
+  - Configuración de la aplicación:
+    - Personalización de campos y categorías de tickets.
+    - Integración con otros sistemas (correo electrónico, LDAP, etc.).
